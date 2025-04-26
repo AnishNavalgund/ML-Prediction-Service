@@ -1,0 +1,5 @@
+__MACOSX
+data/
+.venv/
+__pycache__/
+
