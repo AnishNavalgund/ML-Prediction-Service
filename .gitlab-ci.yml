@@ -1,16 +1,34 @@
 stages:
     - lint
+    - test
     - build
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""
 
 lint:
   stage: lint
   image: python:3.12
   before_script:
-    - pip install black
+    - pip install poetry
+    - poetry install --no-root --no-interaction
   script:
-    - black --check app/
+    - poetry run black --check app/
+
+test:
+  stage: test
+  image: python:3.12
+  before_script:
+    - pip install poetry
+    - poetry install --no-root --no-interaction
+  script:
+    - poetry run pytest
 
 build:
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   script:
     - docker build -t ml-app .

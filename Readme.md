@@ -3,7 +3,7 @@
 ## Setup
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 Service runs on http://localhost:8000
