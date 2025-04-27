@@ -3,16 +3,23 @@
 ![Built with Poetry](https://img.shields.io/badge/Built_with-Poetry-blueviolet)
 ![Python Version](https://img.shields.io/badge/Python-3.12-blue)
 
-Build a simple, clean, tested Machine Learning microservice to:
+**Ovreview**: Create a basic ML Prediction service that ingests data into a MongoDB, trains a model, and serves predictions via an API. The system will use Docker and MongoDB and be ready for CI/CD integration.
 
-- Ingest data to MongoDB
+**Usecase**: A Predictive ML microservice around the classic Iris dataset. In real-world terms - A client (eg: web app, another service) needs to classify new measurements of iris flowers into one of three species (setosa, versicolor, virginica).
 
-- Train ML model  
+## Core High-level Functional Requirements
 
-- Serve model using FastAPI endpoints
+**Data Ingestion**: Accept JSON samples (features + label) via POST /data and persist them.
 
-The project is CI/CD ready and containarized with Docker
+**Data Retrieval**: List existing samples (optionally filtered by label) via GET /data.
 
+**Model Training**: On demand (POST /train), pull all stored samples, fit an ML model, and serialize it.
+
+**Prediction**: Accept feature-only payload via POST /predict, load the latest model, and return a label and confidence.
+
+## **End-to-End Data Flow**
+
+![Logo](images/archi.png)
 
 ## Project Structure
 
