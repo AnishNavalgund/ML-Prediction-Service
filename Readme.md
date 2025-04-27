@@ -77,28 +77,25 @@ The project is CI/CD ready and containarized with Docker
 - MongoDB database at mongodb://localhost:27017
 
 
-## Endpoints
-Endpoint | Method | Description
-/data/iris | POST | Load full Iris CSV into MongoDB
-/data/iris | GET | List all Iris samples
-/train/iris | POST | Train ML model from DB samples
-/predict/iris | POST | Predict species based on features
+## Endpoints and Curl Commands
 
-### Curl Commands
+1. Upload Data: Load full Iris CSV into MongoDB
 
-1. Upload Data:
 `curl -X POST "http://localhost:8000/data/iris" -H "accept: application/json"
 `
 
-2. View Uploaded Data:
+2. View Uploaded Data: List data from db
+
 `curl -X GET "http://localhost:8000/data/iris" -H "accept: application/json"
 `
 
-3. Train Model:
+3. Train Model: Train ML model on DB data
+
 `curl -X POST "http://localhost:8000/train/iris" -H "accept: application/json"
 `
 
-4. Make Prediction:
+4. Make Prediction: Predict species based on features
+
 `
 curl -X POST "http://localhost:8000/predict/iris" \
 -H "accept: application/json" \
@@ -108,9 +105,13 @@ curl -X POST "http://localhost:8000/predict/iris" \
 
 ## GitLab CI/CD Pipeline
 Stages:
+
 lint ➔ check code quality
+
 build ➔ build Docker image
+
 test ➔ run unit tests
+
 The pipeline triggers on `git push`
 
 ## Testing
