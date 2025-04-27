@@ -45,10 +45,14 @@ def train(data: list[dict]) -> None:
     # X = vectorizer.fit_transform(texts)
 
 
-def predict(sample) -> str:
+def predict(sample: dict) -> str:
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
     # X = vec.transform([text])
     input_df = pd.DataFrame([sample])
     prediction = model.predict(input_df)[0]
-    return prediction
+    conf = model.predict_proba(input_df)[0].max()
+    return {
+        "label": prediction,
+        "confidence": float(conf),
+    }

@@ -57,8 +57,13 @@ async def train_model() -> dict:
     samples = mongodb.get_samples()
     if not samples:
         raise HTTPException(status_code=400, detail="No data to train on")
-    model.train(samples)
-    return {"message": "Iris Model trained successfully!!"}
+
+    try:
+        model.train([sample.dict() for sample in samples])
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Model training failed: {str(e)}")
+
+    return {"message": "Iris Model trained and saved successfully!!"}
 
 
 @app.post("/predict/iris", response_model=IrisPredictionResponse)
@@ -71,11 +76,8 @@ async def predict_iris(sample: IrisPredictionRequest) -> IrisPredictionResponse:
         IrisPredictionResponse: Prediction result
     """
     try:
-        prediction = model.predict(sample)
-    except ValueError as error:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Prediction failed: {error}",
-        ) from error
+        prediction = model.predict(sample.model_dump())
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Prediction failed: {str(e)}")
 
-    return prediction
+    return IrisPredictionResponse(**prediction)
