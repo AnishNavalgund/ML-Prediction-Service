@@ -22,12 +22,14 @@ async def upload_iris_data() -> dict:
         dict: Success message.
     """
     try:
-        iris_samples = load_iris_csv(settings.iris_csv_path)
+        # iris_samples = load_iris_csv(settings.iris_csv_path)
+        df = load_iris_csv(settings.iris_csv_path)
+        iris_data = [IrisData(**row) for row in df.to_dict(orient="records")]
+        mongodb.insert_data(iris_data)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to load CSV: {str(e)}")
 
-    mongodb.insert_data(iris_samples)
-    return {"message": f"Successfully uploaded {len(iris_samples)} Iris data."}
+    return {"message": f"Successfully uploaded {len(iris_data)} Iris data."}
 
 
 @app.get("/data/iris", response_model=List[IrisData])
