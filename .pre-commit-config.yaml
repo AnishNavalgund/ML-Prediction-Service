@@ -1,0 +1,48 @@
+# Exclude specific folders or files from being checked
+exclude: "src/model_trainer/ml_models/yolov5/modules/.*"
+
+repos:
+  # Pre-commit's own default hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: pretty-format-json
+        args: ["--autofix", "--indent", "4"]
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: check-yaml
+        exclude: ".gitlab-ci.yml"
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: black
+        name: Black Formatter
+        entry: poetry run black
+        language: system
+        args: ["."]
+        pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: isort
+        name: Import Sorter (isort)
+        entry: poetry run isort
+        language: system
+        args: ["."]
+        pass_filenames: false
