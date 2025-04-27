@@ -55,6 +55,7 @@ async def train_model() -> dict:
         dict: Success message.
     """
     samples = mongodb.get_samples()
+    print(f"Samples found: {len(samples)}")
     if not samples:
         raise HTTPException(status_code=400, detail="No data to train on")
 

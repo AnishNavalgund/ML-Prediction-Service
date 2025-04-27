@@ -17,9 +17,9 @@
 
 **Prediction**: Accept feature-only payload via POST /predict, load the latest model, and return a label and confidence.
 
-## **End-to-End Data Flow**
+## **End-to-End Data Flow of the implementatation**
 
-![Logo](images/archi.png)
+![Logo](images/arch.png)
 
 ## Project Structure
 
@@ -44,7 +44,7 @@
 ├── models/
 │   ├── model.pkl                   # Trained model from API
 │   ├── test_model.pkl              # Trained model from notebook
-│ 
+│
 ├── tests/
 │   ├── test_main.py                # API tests
 │   ├── test_mongodb.py             # DB tests
