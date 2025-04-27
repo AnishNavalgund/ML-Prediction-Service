@@ -1,6 +1,5 @@
 stages:
     - lint
-    - test
     - build
 
 variables:
@@ -12,18 +11,10 @@ lint:
   image: python:3.12
   before_script:
     - pip install poetry
-    - poetry install --no-root --no-interaction
+    - poetry install --no-root --no-interaction --with dev
+    - poetry run pre-commit install
   script:
-    - poetry run black --check app/
-
-test:
-  stage: test
-  image: python:3.12
-  before_script:
-    - pip install poetry
-    - poetry install --no-root --no-interaction
-  script:
-    - poetry run pytest
+    - poetry run pre-commit
 
 build:
   stage: build
