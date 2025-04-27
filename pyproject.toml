@@ -14,6 +14,9 @@ pymongo = "^4.5.0"
 scikit-learn = "^1.3.0"
 pydantic = "^2.5.3"
 pydantic-settings = "^2.0.3"
+ipython = "^8.32.0"
+matplotlib = "^3.10.1"
+seaborn = "^0.13.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "7.0.0"
