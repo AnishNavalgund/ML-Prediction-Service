@@ -16,8 +16,10 @@ sample_collection: Collection = db["samples"]
 
 
 # Injest data into MongoDB
-def insert_sample(sample):
-    sample_collection.insert_one(sample.dict())
+def insert_data(samples: list[IrisData]) -> None:
+    documents = [sample.dict() for sample in samples]
+    sample_collection.delete_many({})
+    sample_collection.insert_many(documents)
 
 
 def get_samples(label=None):

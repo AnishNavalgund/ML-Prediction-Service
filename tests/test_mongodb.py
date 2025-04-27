@@ -19,15 +19,18 @@ def clear_samples():
     mongodb.sample_collection.delete_many({})
 
 
-def test_insert_sample():
-    mongodb.insert_sample(TEST_SAMPLE)
+def test_insert_data():
+    mongodb.insert_data([TEST_SAMPLE])
+
     samples = mongodb.get_samples()
     assert len(samples) == 1
+    assert isinstance(samples[0], IrisData)
     assert samples[0].label == "setosa"
 
 
 def test_get_samples():
-    mongodb.insert_sample(TEST_SAMPLE)
+    # mongodb.insert_data(TEST_SAMPLE)
+    mongodb.insert_data([TEST_SAMPLE])
 
     all_samples = mongodb.get_samples()
     assert len(all_samples) == 1

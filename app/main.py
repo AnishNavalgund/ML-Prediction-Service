@@ -3,7 +3,9 @@ from typing import List
 from fastapi import Body, FastAPI, HTTPException
 
 from app import model, mongodb
+from app.configuration import settings
 from app.schema import IrisData, IrisPredictionRequest, IrisPredictionResponse
+from app.utils import load_iris_csv
 
 app = FastAPI(
     title="ML Classification Service API",
@@ -13,16 +15,19 @@ app = FastAPI(
 
 
 @app.post("/data/iris", response_model=dict)
-async def add_sample(sample: IrisData) -> dict:
+async def upload_iris_data() -> dict:
     """
-    Ingest a Iris data into MongoDB.
-    Args:
-        sample: Incoming Iris sample.
+    Upload the entire Iris dataset into MongoDB.
     Returns:
         dict: Success message.
     """
-    mongodb.insert_sample(sample)
-    return {"message": "Iris Sample added successfully!!"}
+    try:
+        iris_samples = load_iris_csv(settings.iris_csv_path)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to load CSV: {str(e)}")
+
+    mongodb.insert_data(iris_samples)
+    return {"message": f"Successfully uploaded {len(iris_samples)} Iris data."}
 
 
 @app.get("/data/iris", response_model=List[IrisData])

@@ -16,32 +16,23 @@ def clean_db():
 
 
 def test_post_data_iris():
-    sample_data = {
-        "sepal_length": 5.1,
-        "sepal_width": 3.5,
-        "petal_length": 1.4,
-        "petal_width": 0.2,
-        "label": "setosa",
-    }
-    response = client.post("/data/iris", json=sample_data)
+    response = client.post("/data/iris")
+
     assert response.status_code == 200
-    assert response.json() == {"message": "Iris Sample added successfully!!"}
+    assert "Successfully uploaded" in response.json()["message"]
 
 
 def test_get_data_iris():
-    sample_data = {
-        "sepal_length": 6.4,
-        "sepal_width": 2.9,
-        "petal_length": 4.3,
-        "petal_width": 1.3,
-        "label": "versicolor",
-    }
-    client.post("/data/iris", json=sample_data)
+    response = client.post("/data/iris")
+    assert response.status_code == 200
 
+    # Fetch all samples
     response = client.get("/data/iris")
     assert response.status_code == 200
     data = response.json()
 
+    # Basic checks
     assert isinstance(data, list)
-    assert len(data) >= 1
-    assert any(sample["label"] == "versicolor" for sample in data)
+    assert len(data) > 0  # CSV loaded, should have 150 samples
+    assert all("sepal_length" in sample for sample in data)
+    assert all("label" in sample for sample in data)
