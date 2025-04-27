@@ -15,7 +15,8 @@ The project is CI/CD ready and containarized with Docker
 
 
 ## Project Structure
-`
+
+```
 .
 ├── app/
 │   ├── configuration.py            # Env configs
@@ -48,13 +49,12 @@ The project is CI/CD ready and containarized with Docker
 ├── poetry.lock
 ├── README.md
 └── CHANGELOG.md
+```
 
-`
 
 ## Setup and Run Locally
 
 1. Install poetry (python dependency and management tool)
-
 `pip install poetry
 `
 
