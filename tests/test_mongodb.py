@@ -3,6 +3,7 @@ import pytest
 from app import mongodb
 from app.schema import IrisData
 
+# Dummy IrisData for testing
 TEST_SAMPLE = IrisData(
     sepal_length=5.1,
     sepal_width=3.5,
@@ -14,12 +15,18 @@ TEST_SAMPLE = IrisData(
 
 @pytest.fixture(autouse=True)
 def clear_samples():
+    """
+    Fixture to clear the sample collection before and after each test.
+    """
     mongodb.sample_collection.delete_many({})
     yield
     mongodb.sample_collection.delete_many({})
 
 
 def test_insert_data():
+    """
+    Test inserting IrisData sample into MongoDB.
+    """
     mongodb.insert_data([TEST_SAMPLE])
 
     samples = mongodb.get_samples()
@@ -29,7 +36,9 @@ def test_insert_data():
 
 
 def test_get_samples():
-    # mongodb.insert_data(TEST_SAMPLE)
+    """
+    Test retrieving samples from MongoDB.
+    """
     mongodb.insert_data([TEST_SAMPLE])
 
     all_samples = mongodb.get_samples()

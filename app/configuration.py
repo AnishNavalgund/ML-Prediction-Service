@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     mongo_db_name: str = "ml_db"
     model_storage_path: str = str(BASE_DIR / "models/model.pkl")
     iris_csv_path: str = str(BASE_DIR / "data/iris.csv")
-    # iris_csv_path: str = "data/iris.csv"
 
     class Config:
         env_file = ".env"
