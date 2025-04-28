@@ -1,15 +1,28 @@
 import os
+from typing import List, Optional
 
 from pymongo import MongoClient
+from pymongo.collection import Collection
 
-client = MongoClient(os.getenv("MONGO_URI", "mongodb://mongo:27017"))
-db = client.ml_db
+from app.configuration import Settings
+from app.schema import IrisData
+
+settings = Settings()
+
+# Initialize MongoDB client and database
+client: MongoClient = MongoClient(settings.mongo_uri)
+db = client[settings.mongo_db_name]
+sample_collection: Collection = db["samples"]
 
 
-def insert_sample(sample):
-    db.samples.insert_one(sample)
+# Injest data into MongoDB
+def insert_data(samples: list[IrisData]) -> None:
+    documents = [sample.dict() for sample in samples]
+    sample_collection.delete_many({})
+    sample_collection.insert_many(documents)
 
 
 def get_samples(label=None):
     query = {"label": label} if label else {}
-    return list(db.samples.find(query, {"_id": 0}))
+    documents = sample_collection.find(query, {"_id": 0})
+    return [IrisData(**doc) for doc in documents]
