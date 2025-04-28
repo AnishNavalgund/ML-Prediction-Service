@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3-CompleteFeature
+
+- Add the ML componenet
+- Implemented the endpoints: /train/iris and /predict/iris
+- Updated ReadMe for documentation
+
 ## v0.2-DataIngestionAndRetrieval
 
 - Setup FastAPI microservice
