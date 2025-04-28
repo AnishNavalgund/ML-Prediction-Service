@@ -18,7 +18,7 @@ def clean_db():
     mongodb.sample_collection.delete_many({})
 
 
-# Create a dummy DataFrame for mocking
+# Dummy DataFrame for mocking
 dummy_iris_df = pd.DataFrame(
     [
         {
