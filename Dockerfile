@@ -1,11 +1,16 @@
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY . /app
 
-RUN pip install poetry \
-    && poetry config virtualenvs.create false \
-    && poetry install --only main --no-root --no-interaction
+RUN pip install --no-cache-dir poetry
+
+RUN poetry config virtualenvs.create false
+
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install --only main --no-root --no-interaction
+
+COPY . .
 
 EXPOSE 8000
 
