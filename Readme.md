@@ -1,4 +1,5 @@
-# MLE Take-Home Assignment Starter
+# Machine Learing Prediction Service 
+(Note: Imported from Gitlab)
 
 ![Built with Poetry](https://img.shields.io/badge/Built_with-Poetry-blueviolet)
 ![Python Version](https://img.shields.io/badge/Python-3.12-blue)
@@ -126,8 +127,7 @@ The pipeline triggers on `git push`
 To run tests locally,
 `poetry run pytest --disable-warnings`
 
-## Submitted by:
+## Contact:
 ```
-Name: Anish K Navalgund
 Email: anishk.navalgund@gmail.com
 ```
